@@ -4,9 +4,165 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Schedule &amp; Results | Texas Bowling Club</title>
-  <meta name="description" content="Tournament schedule and results for Texas Bowling Club’s 2026–27 season.">
+  <meta name="description" content="Texas Bowling Club tournament schedule, team results, and individual averages.">
   <link rel="stylesheet" href="athletics.css">
+
+  <style>
+    .tournament-row {
+      display: grid;
+      grid-template-columns: 160px minmax(0, 1fr) 220px;
+      align-items: center;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid #dedbd8;
+    }
+
+    .tournament-row h3,
+    .tournament-row p {
+      margin: 0;
+    }
+
+    .tournament-row h3 {
+      margin-bottom: 6px;
+    }
+
+    .tournament-row h3 a {
+      color: #a63a11;
+      text-underline-offset: 4px;
+    }
+
+    .tournament-row p {
+      color: #625a54;
+    }
+
+    .team-placement {
+      text-align: right;
+      font-weight: 700;
+      line-height: 1.8;
+    }
+
+    .team-placement span {
+      display: block;
+    }
+
+    .result-summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin: 24px 0 32px;
+    }
+
+    .result-card {
+      padding: 24px;
+      background: #f4f2ef;
+      border-top: 4px solid #a63a11;
+    }
+
+    .result-card h2 {
+      margin-bottom: 12px;
+      font-size: 1.35rem;
+    }
+
+    .result-card p {
+      margin: 4px 0;
+    }
+
+    .placing {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #a63a11;
+    }
+
+    .results-section {
+      margin-top: 32px;
+    }
+
+    .results-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .results-table caption {
+      text-align: left;
+      font-weight: 700;
+      padding-bottom: 12px;
+    }
+
+    .results-table th,
+    .results-table td {
+      padding: 12px;
+      border-bottom: 1px solid #dedbd8;
+      white-space: nowrap;
+    }
+
+    .results-table thead {
+      background: #252321;
+      color: white;
+    }
+
+    .results-table tbody tr:nth-child(even) {
+      background: #f4f2ef;
+    }
+
+    .results-table .number {
+      text-align: right;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: #a63a11;
+      font-weight: 700;
+    }
+
+    .source-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      margin: 28px 0;
+    }
+
+    .source-links a {
+      color: #a63a11;
+      font-weight: 700;
+    }
+
+    .result-note {
+      color: #625a54;
+      font-size: 0.9rem;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 700px) {
+      .tournament-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .team-placement {
+        text-align: left;
+      }
+
+      .result-summary {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <header class="masthead">
     <div class="shell brand">
@@ -29,103 +185,453 @@
   </div>
 
   <main class="shell content">
-    <div class="section-title">
-      <h1>Schedule &amp; Results</h1>
-      <span>2026–27 season</span>
+    <div id="schedule-view">
+      <div class="section-title">
+        <h1>Schedule &amp; Results</h1>
+        <span>2026–27 season</span>
+      </div>
+
+      <section class="schedule-group" aria-labelledby="upcoming-title">
+        <h2 id="upcoming-title">Upcoming Tournaments</h2>
+        <div id="upcoming-events"></div>
+      </section>
+
+      <section class="schedule-group" aria-labelledby="completed-title">
+        <h2 id="completed-title">Completed Tournaments</h2>
+        <div id="completed-events"></div>
+      </section>
     </div>
 
-    <section class="schedule-group" aria-labelledby="upcoming">
-      <h2 id="upcoming">Upcoming Tournaments</h2>
+    <div id="tournament-view" hidden>
+      <a class="back-link" href="schedule.html">
+        ← Back to Schedule &amp; Results
+      </a>
 
-      <article class="event" id="arlington">
-        <strong>Nov. 14, 2026</strong>
-        <div>
-          <h3>SWIBC III</h3>
-          <p>AMF Spare Time Lanes · Arlington, Texas</p>
-        </div>
-        <span class="tag">Upcoming</span>
-      </article>
+      <div class="section-title">
+        <h1 id="tournament-title"></h1>
+        <span>2026–27 season</span>
+      </div>
 
-      <article class="event" id="swibc-iv">
-        <strong>Nov. 15, 2026</strong>
-        <div>
-          <h3>SWIBC IV</h3>
-          <p>AMF Spare Time Lanes · Arlington, Texas</p>
-        </div>
-        <span class="tag">Upcoming</span>
-      </article>
+      <p id="tournament-date"></p>
+      <p id="tournament-venue"></p>
 
-      <article class="event" id="glen-carlson">
-        <strong>Dec. 18–19, 2026</strong>
-        <div>
-          <h3>The Glen Carlson Las Vegas Invitational</h3>
-          <p>South Point Bowling Plaza · Las Vegas, Nevada</p>
-        </div>
-        <span class="tag">Upcoming</span>
-      </article>
+      <div id="tournament-results"></div>
+    </div>
 
-      <article class="event" id="shoot-out">
-        <strong>Dec. 20–21, 2026</strong>
-        <div>
-          <h3>Collegiate Shoot-Out</h3>
-          <p>South Point Bowling Plaza · Las Vegas, Nevada</p>
-        </div>
-        <span class="tag">Upcoming</span>
-      </article>
-
-      <article class="event" id="swibc-v">
-        <strong>Jan. 16, 2027</strong>
-        <div>
-          <h3>SWIBC V</h3>
-          <p>Plano Super Bowl · Plano, Texas</p>
-        </div>
-        <span class="tag">Upcoming</span>
-      </article>
-
-      <article class="event" id="swibc-vi">
-        <strong>Jan. 17, 2027</strong>
-        <div>
-          <h3>SWIBC VI</h3>
-          <p>Plano Super Bowl · Plano, Texas</p>
-        </div>
-        <span class="tag">Upcoming</span>
-      </article>
-
-      <article class="event" id="championships">
-        <strong>Feb. 6–7, 2027</strong>
-        <div>
-          <h3>SWIBC Championships</h3>
-          <p>Holiday Lanes · Oklahoma City, Oklahoma</p>
-        </div>
-        <span class="tag">Upcoming</span>
-      </article>
-    </section>
-
-    <section class="schedule-group" aria-labelledby="completed">
-      <h2 id="completed">Completed Tournaments</h2>
-
-      <article class="event" id="garland">
-        <strong>Oct. 3, 2026</strong>
-        <div>
-          <h3>SWIBC I</h3>
-          <p>Garland, Texas</p>
-        </div>
-        <span class="tag">Completed</span>
-      </article>
-
-      <article class="event" id="swibc-ii">
-        <strong>Oct. 4, 2026</strong>
-        <div>
-          <h3>SWIBC II</h3>
-          <p>Garland, Texas</p>
-        </div>
-        <span class="tag">Completed</span>
-      </article>
-    </section>
+    <noscript>
+      <p>
+        Enable JavaScript to view tournament entries and results.
+        Official results are available at
+        <a href="https://collegebowling.bowl.com/">
+          USBC Collegiate Bowling
+        </a>.
+      </p>
+    </noscript>
   </main>
 
   <footer class="shell">
     Texas Bowling Club · Austin, Texas
   </footer>
+
+  <script>
+    const tournaments = [
+      {
+        slug: "swibc-i",
+        anchor: "garland",
+        name: "SWIBC I",
+        date: "October 3, 2026",
+        venue: "Garland, Texas",
+        eventId: 4176,
+        completed: true,
+        format: "4 team games and 10 Baker games",
+        men: {
+          place: "14th",
+          teamPins: 3089,
+          bakerPins: 1412,
+          totalPins: 4501,
+          bowlers: [
+            {
+              rank: 53,
+              name: "Nathan Nguyen",
+              games: 4,
+              pins: 696,
+              average: "174.00"
+            },
+            {
+              rank: 55,
+              name: "Liam Fuentespina",
+              games: 4,
+              pins: 693,
+              average: "173.25"
+            },
+            {
+              rank: 94,
+              name: "Jayden Vu",
+              games: 4,
+              pins: 578,
+              average: "144.50"
+            },
+            {
+              rank: 97,
+              name: "Joshua Jordan",
+              games: 4,
+              pins: 567,
+              average: "141.75"
+            },
+            {
+              rank: 100,
+              name: "Matthew Lamp",
+              games: 4,
+              pins: 555,
+              average: "138.75"
+            }
+          ]
+        },
+        women: {
+          place: "12th",
+          teamPins: 1974,
+          bakerPins: 853,
+          totalPins: 2827,
+          bowlers: [
+            {
+              rank: 13,
+              name: "Makayla Lightsey",
+              games: 4,
+              pins: 609,
+              average: "152.25"
+            },
+            {
+              rank: 27,
+              name: "Lyvia Sorkowitz",
+              games: 4,
+              pins: 543,
+              average: "135.75"
+            },
+            {
+              rank: 42,
+              name: "Isabella Vargas",
+              games: 4,
+              pins: 475,
+              average: "118.75"
+            },
+            {
+              rank: 57,
+              name: "Rosie Green",
+              games: 4,
+              pins: 347,
+              average: "86.75"
+            }
+          ]
+        }
+      },
+      {
+        slug: "swibc-ii",
+        anchor: "swibc-ii",
+        name: "SWIBC II",
+        date: "October 4, 2026",
+        venue: "Garland, Texas",
+        eventId: 4177,
+        completed: true,
+        format: "6 team games",
+        men: {
+          place: "16th",
+          teamPins: 4581,
+          bakerPins: 0,
+          totalPins: 4581,
+          bowlers: [
+            {
+              rank: 60,
+              name: "Nathan Nguyen",
+              games: 6,
+              pins: 1014,
+              average: "169.00"
+            },
+            {
+              rank: 69,
+              name: "Matthew Lamp",
+              games: 6,
+              pins: 963,
+              average: "160.50"
+            },
+            {
+              rank: 81,
+              name: "Liam Fuentespina",
+              games: 6,
+              pins: 905,
+              average: "150.83"
+            },
+            {
+              rank: 82,
+              name: "Jayden Vu",
+              games: 6,
+              pins: 902,
+              average: "150.33"
+            },
+            {
+              rank: 102,
+              name: "Joshua Jordan",
+              games: 6,
+              pins: 797,
+              average: "132.83"
+            }
+          ]
+        },
+        women: {
+          place: "11th",
+          teamPins: 2913,
+          bakerPins: 0,
+          totalPins: 2913,
+          bowlers: [
+            {
+              rank: 22,
+              name: "Lyvia Sorkowitz",
+              games: 6,
+              pins: 821,
+              average: "136.83"
+            },
+            {
+              rank: 26,
+              name: "Makayla Lightsey",
+              games: 6,
+              pins: 803,
+              average: "133.83"
+            },
+            {
+              rank: 31,
+              name: "Isabella Vargas",
+              games: 6,
+              pins: 727,
+              average: "121.17"
+            },
+            {
+              rank: 50,
+              name: "Rosie Green",
+              games: 6,
+              pins: 562,
+              average: "93.67"
+            }
+          ]
+        }
+      },
+      {
+        slug: "swibc-iii",
+        anchor: "arlington",
+        name: "SWIBC III",
+        date: "November 14, 2026",
+        venue: "AMF Spare Time Lanes · Arlington, Texas",
+        completed: false
+      },
+      {
+        slug: "swibc-iv",
+        anchor: "swibc-iv",
+        name: "SWIBC IV",
+        date: "November 15, 2026",
+        venue: "AMF Spare Time Lanes · Arlington, Texas",
+        completed: false
+      },
+      {
+        slug: "glen-carlson",
+        anchor: "glen-carlson",
+        name: "The Glen Carlson Las Vegas Invitational",
+        date: "December 18–19, 2026",
+        venue: "South Point Bowling Plaza · Las Vegas, Nevada",
+        completed: false
+      },
+      {
+        slug: "shoot-out",
+        anchor: "shoot-out",
+        name: "Collegiate Shoot-Out",
+        date: "December 20–21, 2026",
+        venue: "South Point Bowling Plaza · Las Vegas, Nevada",
+        completed: false
+      },
+      {
+        slug: "swibc-v",
+        anchor: "swibc-v",
+        name: "SWIBC V",
+        date: "January 16, 2027",
+        venue: "Plano Super Bowl · Plano, Texas",
+        completed: false
+      },
+      {
+        slug: "swibc-vi",
+        anchor: "swibc-vi",
+        name: "SWIBC VI",
+        date: "January 17, 2027",
+        venue: "Plano Super Bowl · Plano, Texas",
+        completed: false
+      },
+      {
+        slug: "championships",
+        anchor: "championships",
+        name: "SWIBC Championships",
+        date: "February 6–7, 2027",
+        venue: "Holiday Lanes · Oklahoma City, Oklahoma",
+        completed: false
+      }
+    ];
+
+    function scheduleEntry(tournament) {
+      const placement = tournament.completed
+        ? `
+          <span>Men’s Team · ${tournament.men.place}</span>
+          <span>Women’s Team · ${tournament.women.place}</span>
+        `
+        : '<span class="tag">Upcoming</span>';
+
+      return `
+        <article class="tournament-row" id="${tournament.anchor}">
+          <strong>${tournament.date}</strong>
+          <div>
+            <h3>
+              <a href="schedule.html?tournament=${tournament.slug}">
+                ${tournament.name}
+              </a>
+            </h3>
+            <p>${tournament.venue}</p>
+          </div>
+          <div class="team-placement">${placement}</div>
+        </article>
+      `;
+    }
+
+    function teamSummary(label, team) {
+      return `
+        <section class="result-card">
+          <h2>${label} Team</h2>
+          <p class="placing">${team.place} Place</p>
+          <p>Team-game pins · ${team.teamPins.toLocaleString("en-US")}</p>
+          <p>Baker pins · ${team.bakerPins.toLocaleString("en-US")}</p>
+          <p><strong>Total pins · ${team.totalPins.toLocaleString("en-US")}</strong></p>
+        </section>
+      `;
+    }
+
+    function averagesTable(label, team) {
+      const rows = team.bowlers.map(bowler => `
+        <tr>
+          <td class="number">${bowler.rank}</td>
+          <th scope="row">${bowler.name}</th>
+          <td class="number">${bowler.games}</td>
+          <td class="number">${bowler.pins.toLocaleString("en-US")}</td>
+          <td class="number">${bowler.average}</td>
+        </tr>
+      `).join("");
+
+      return `
+        <div class="table-scroll">
+          <table class="results-table">
+            <caption>${label}</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="number">USBC Rank</th>
+                <th scope="col">Bowler</th>
+                <th scope="col" class="number">Games</th>
+                <th scope="col" class="number">Total Pins</th>
+                <th scope="col" class="number">Individual Average</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    const upcomingEvents = tournaments.filter(t => !t.completed);
+    const completedEvents = tournaments.filter(t => t.completed);
+
+    document.getElementById("upcoming-events").innerHTML =
+      upcomingEvents.map(scheduleEntry).join("");
+
+    document.getElementById("completed-events").innerHTML =
+      completedEvents.map(scheduleEntry).join("");
+
+    const selectedSlug = new URLSearchParams(window.location.search)
+      .get("tournament");
+
+    const selectedTournament = tournaments.find(
+      tournament => tournament.slug === selectedSlug
+    );
+
+    if (selectedTournament) {
+      document.getElementById("schedule-view").hidden = true;
+      document.getElementById("tournament-view").hidden = false;
+
+      document.title =
+        selectedTournament.name + " | Texas Bowling Club";
+
+      document.getElementById("tournament-title").textContent =
+        selectedTournament.name;
+
+      document.getElementById("tournament-date").textContent =
+        selectedTournament.date;
+
+      document.getElementById("tournament-venue").textContent =
+        selectedTournament.venue;
+
+      const results = document.getElementById("tournament-results");
+
+      if (selectedTournament.completed) {
+        const sourcePath =
+          "29/" +
+          selectedTournament.eventId + "/" +
+          encodeURIComponent(selectedTournament.name) +
+          "/2026-2027/";
+
+        const standingsUrl =
+          "https://collegebowling.bowl.com/teamStandings/" + sourcePath;
+
+        const averagesUrl =
+          "https://collegebowling.bowl.com/eventAverage/" + sourcePath;
+
+        results.innerHTML = `
+          <p><strong>Format</strong> · ${selectedTournament.format}</p>
+
+          <div class="result-summary">
+            ${teamSummary("Men’s", selectedTournament.men)}
+            ${teamSummary("Women’s", selectedTournament.women)}
+          </div>
+
+          <section class="results-section">
+            <h2>Individual Averages</h2>
+            <p class="result-note">
+              Rankings are the positions published by USBC within
+              each men’s or women’s event listing. Averages are
+              rounded to two decimal places.
+            </p>
+
+            ${averagesTable("Men’s Individual Averages", selectedTournament.men)}
+            <br>
+            ${averagesTable("Women’s Individual Averages", selectedTournament.women)}
+          </section>
+
+          <nav class="source-links" aria-label="Official USBC results">
+            <a href="${standingsUrl}true" target="_blank" rel="noopener">
+              Men’s Team Standings
+            </a>
+            <a href="${standingsUrl}false" target="_blank" rel="noopener">
+              Women’s Team Standings
+            </a>
+            <a href="${averagesUrl}true" target="_blank" rel="noopener">
+              Men’s Individual Results
+            </a>
+            <a href="${averagesUrl}false" target="_blank" rel="noopener">
+              Women’s Individual Results
+            </a>
+          </nav>
+        `;
+      } else {
+        results.innerHTML = `
+          <section class="results-section">
+            <h2>Results Pending</h2>
+            <p>
+              Team placements and individual averages will be
+              posted after the tournament.
+            </p>
+          </section>
+        `;
+      }
+    }
+  </script>
 </body>
 </html>
