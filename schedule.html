@@ -488,7 +488,7 @@
     function scheduleEntry(tournament) {
       const placement = tournament.partialResults
         ? `
-          <span>Men’s Results · <a class="result-source" href="${tournament.mensSourceUrl}" target="_blank" rel="noopener noreferrer">POC Stats ↗</a></span>
+          <span>Men’s Results · Verification pending</span>
           <span>Women’s Results · TBA</span>
         `
         : tournament.completed
@@ -595,9 +595,8 @@
           <div class="result-summary">
             <section class="result-card">
               <h2>Men’s Division</h2>
-              <p><strong>Results source: POC Stats</strong></p>
-              <p>The men's team placement, pin totals, and individual averages have not yet been verified for publication on this page.</p>
-              <p><a class="back-link" href="${selectedTournament.mensSourceUrl}" target="_blank" rel="noopener noreferrer">View men's results on POC Stats ↗</a></p>
+              <p class="placing" style="font-size:1.2rem">Awaiting verified scores</p>
+              <p>Team placement, team-game pins, Baker pins, and total pins will be published here.</p>
             </section>
             <section class="result-card">
               <h2>Women’s Division</h2>
@@ -605,7 +604,29 @@
               <p>Team placement and individual averages are awaiting release.</p>
             </section>
           </div>
-          <p class="result-note">Select SWIBC III or SWIBC IV in POC Stats History to view the men's results. Women's results will be added when available.</p>
+          <section class="results-section">
+            <h2>Men’s Individual Averages</h2>
+            <div class="table-scroll">
+              <table class="results-table">
+                <caption>${selectedTournament.name} — Texas-Austin</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Bowler</th>
+                    <th scope="col" class="number">Games</th>
+                    <th scope="col" class="number">Total Pins</th>
+                    <th scope="col" class="number">Average</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td colspan="4">Score rows pending verification from POC Stats; no scores have been published here yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <section class="results-section">
+            <h2>Women’s Individual Averages</h2>
+            <p class="placing">TBA</p>
+          </section>
         `;
       } else if (selectedTournament.completed) {
         const sourcePath =
