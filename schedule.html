@@ -142,6 +142,13 @@
       font-size: 0.9rem;
     }
 
+    .team-placement .result-source {
+      color: #7134ae;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
     [hidden] {
       display: none !important;
     }
@@ -422,7 +429,9 @@
         name: "SWIBC III",
         date: "November 14, 2026",
         venue: "AMF Spare Time Lanes · Arlington, Texas",
-        completed: false
+        completed: true,
+        partialResults: true,
+        mensSourceUrl: "https://pocstats.blinkpowered.com/history"
       },
       {
         slug: "swibc-iv",
@@ -430,7 +439,9 @@
         name: "SWIBC IV",
         date: "November 15, 2026",
         venue: "AMF Spare Time Lanes · Arlington, Texas",
-        completed: false
+        completed: true,
+        partialResults: true,
+        mensSourceUrl: "https://pocstats.blinkpowered.com/history"
       },
       {
         slug: "glen-carlson",
@@ -475,12 +486,17 @@
     ];
 
     function scheduleEntry(tournament) {
-      const placement = tournament.completed
+      const placement = tournament.partialResults
         ? `
-          <span>Men’s Team · ${tournament.men.place}</span>
-          <span>Women’s Team · ${tournament.women.place}</span>
+          <span>Men’s Results · <a class="result-source" href="${tournament.mensSourceUrl}" target="_blank" rel="noopener noreferrer">POC Stats ↗</a></span>
+          <span>Women’s Results · TBA</span>
         `
-        : '<span class="tag">Upcoming</span>';
+        : tournament.completed
+          ? `
+            <span>Men’s Team · ${tournament.men.place}</span>
+            <span>Women’s Team · ${tournament.women.place}</span>
+          `
+          : '<span class="tag">Upcoming</span>';
 
       return `
         <article class="tournament-row" id="${tournament.anchor}">
@@ -574,7 +590,24 @@
 
       const results = document.getElementById("tournament-results");
 
-      if (selectedTournament.completed) {
+      if (selectedTournament.partialResults) {
+        results.innerHTML = `
+          <div class="result-summary">
+            <section class="result-card">
+              <h2>Men’s Division</h2>
+              <p><strong>Results source: POC Stats</strong></p>
+              <p>The men's team placement, pin totals, and individual averages have not yet been verified for publication on this page.</p>
+              <p><a class="back-link" href="${selectedTournament.mensSourceUrl}" target="_blank" rel="noopener noreferrer">View men's results on POC Stats ↗</a></p>
+            </section>
+            <section class="result-card">
+              <h2>Women’s Division</h2>
+              <p class="placing">TBA</p>
+              <p>Team placement and individual averages are awaiting release.</p>
+            </section>
+          </div>
+          <p class="result-note">Select SWIBC III or SWIBC IV in POC Stats History to view the men's results. Women's results will be added when available.</p>
+        `;
+      } else if (selectedTournament.completed) {
         const sourcePath =
           "29/" +
           selectedTournament.eventId + "/" +
