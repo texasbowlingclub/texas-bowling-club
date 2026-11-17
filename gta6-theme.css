@@ -192,3 +192,34 @@ footer {
   .nav-band a, .quicklinks a { transition: none; }
   .quicklinks a:hover { transform: none; }
 }
+
+/* Coordinated launch-week banner on every club page. */
+.launch-strip {
+  background: linear-gradient(90deg, #64309d 0%, #b15cca 53%, #f2a6b5 100%);
+  color: #fff;
+  padding: 11px 16px;
+  text-align: center;
+  font-size: .76rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.launch-strip span { color: #fff1c8; }
+
+/* Schedule-specific components that previously used burnt orange. */
+.tournament-row { border-bottom-color: #e4d0ef; }
+.tournament-row h3 a, .back-link, .source-links a { color: #7637b9; }
+.tournament-row p, .result-note { color: #665874; }
+.result-card {
+  background: linear-gradient(140deg, #f4e8fd, #fff1fa);
+  border-top-color: #b45de1;
+  border-radius: 8px;
+}
+.placing { color: #7b38b6; }
+.results-table th, .results-table td { border-bottom-color: #e5d4f2; }
+.results-table thead { background: #241538; color: #fff; }
+.results-table tbody tr:nth-child(even) { background: #f8edfc; }
+
+@media (max-width: 720px) {
+  .launch-strip { font-size: .64rem; letter-spacing: .06em; }
+}
